@@ -1,0 +1,40 @@
+[gd_scene load_steps=4 format=2]
+
+[ext_resource path="res://Scripts/SnakeHead.gd" type="Script" id=1]
+[ext_resource path="res://Assets/SnakeHead.png" type="Texture" id=2]
+
+[sub_resource type="RectangleShape2D" id=1]
+extents = Vector2( 32, 32 )
+
+[node name="SnakeHead" type="KinematicBody2D"]
+position = Vector2( 32, 32 )
+script = ExtResource( 1 )
+__meta__ = {
+"_edit_group_": true
+}
+
+[node name="Sprite" type="Sprite" parent="."]
+texture = ExtResource( 2 )
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource( 1 )
+
+[node name="DetectorPoint" type="Node2D" parent="."]
+
+[node name="RayCast2D" type="RayCast2D" parent="DetectorPoint"]
+position = Vector2( 0, -33 )
+rotation = -3.14159
+enabled = true
+cast_to = Vector2( 0, 16 )
+
+[node name="RayCastApple" type="RayCast2D" parent="DetectorPoint"]
+position = Vector2( 0, -33 )
+rotation = -3.14159
+enabled = true
+cast_to = Vector2( 0, 80 )
+collision_mask = 2
+
+[node name="MovableTimer" type="Timer" parent="."]
+wait_time = 0.15
+
+[connection signal="timeout" from="MovableTimer" to="." method="_on_MovableTimer_timeout"]
